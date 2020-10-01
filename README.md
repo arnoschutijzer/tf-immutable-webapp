@@ -1,4 +1,4 @@
-# tf-immutable-webapps
+# tf-immutable-webapp
 
 A Terraform module to provision immutable webapps.
 
