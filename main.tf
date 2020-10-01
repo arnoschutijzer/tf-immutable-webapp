@@ -46,6 +46,6 @@ resource "null_resource" "upload_configuration_files" {
   }
 
   provisioner "local-exec" {
-    command = "aws s3 cp ${var.configuration_files_path} ${local.s3_uri} --recursive"
+    command = "aws s3api wait bucket-exists --bucket ${var.bucket_name} && aws s3 cp ${var.configuration_files_path} ${local.s3_uri} --recursive"
   }
 }
