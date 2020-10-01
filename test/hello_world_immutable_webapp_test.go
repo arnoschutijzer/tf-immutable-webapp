@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"testing"
+	"time"
 
 	awssdk "github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
@@ -16,7 +17,7 @@ func TestTerraformHelloWorldExample(t *testing.T) {
 	awsRegion := "eu-west-1"
 
 	bucketName := "arnoschutijzer-immutable-webapp-test"
-	configurationPath := "./configuration"
+	configurationPath := "./test/configuration"
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../",
 		Vars: map[string]interface{}{
@@ -29,9 +30,12 @@ func TestTerraformHelloWorldExample(t *testing.T) {
 	}
 
 	terraform.InitAndApply(t, terraformOptions)
+	// sleep for 5 seconds to make sure the aws bucket is created
+	time.Sleep(5000)
 
-	applicationFileName := "./example_app/index.html"
-	DeployApplication(t, awsRegion, bucketName, applicationFileName)
+	applicationFileName := "index.html"
+	applicationDirectory := "./example_app"
+	DeployApplication(t, awsRegion, bucketName, applicationFileName, applicationDirectory)
 
 	s3uri := terraform.Output(t, terraformOptions, "s3_uri")
 	expectedS3Uri := fmt.Sprintf("s3://%s", bucketName)
@@ -41,8 +45,10 @@ func TestTerraformHelloWorldExample(t *testing.T) {
 	defer CleanUpState(t, awsRegion, bucketName, terraformOptions)
 }
 
-func DeployApplication(t *testing.T, awsRegion string, bucketName string, fileName string) {
-	f, err := os.Open(fileName)
+func DeployApplication(t *testing.T, awsRegion string, bucketName string, fileName string, directory string) {
+	concatenatedFileName := fmt.Sprintf("%s/%s", directory, fileName)
+
+	f, err := os.Open(concatenatedFileName)
 	if err != nil {
 		panic(fmt.Errorf("failed to open file %q, %v", fileName, err).Error())
 	}
