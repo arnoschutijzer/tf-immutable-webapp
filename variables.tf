@@ -4,6 +4,6 @@ variable "bucket_name" {
 }
 
 variable "configuration_files_path" {
-  type = string
+  type        = string
   description = "The relative path to the configuration files."
 }
