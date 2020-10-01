@@ -29,10 +29,6 @@ EOF
     index_document = "index.html"
     error_document = "error.html"
   }
-
-  versioning {
-    enabled = true
-  }
 }
 
 # calculate the hash of the configuration dir
