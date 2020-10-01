@@ -5,7 +5,6 @@ import (
 	"os"
 	"strings"
 	"testing"
-	"time"
 
 	awssdk "github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
@@ -32,8 +31,6 @@ func TestTerraformHelloWorldExample(t *testing.T) {
 	}
 
 	terraform.InitAndApply(t, terraformOptions)
-	// sleep for 5 seconds to make sure the aws bucket is created
-	time.Sleep(5000)
 
 	applicationFileName := "index.html"
 	applicationDirectory := "./example_app"
