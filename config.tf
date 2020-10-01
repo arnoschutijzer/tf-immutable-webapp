@@ -1,0 +1,8 @@
+terraform {
+  required_version = ">= 0.13.3"
+  required_providers {
+    aws = {
+      version = ">= 3.8"
+    }
+  }
+}
