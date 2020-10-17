@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTerraformHelloWorldExample(t *testing.T) {
+func TestImmutableWebapp(t *testing.T) {
 	awsRegion := "eu-west-1"
 
 	bucketName := "arnoschutijzer-immutable-webapp-test"
